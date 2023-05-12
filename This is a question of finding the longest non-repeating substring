@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX(a,b) ((a)>(b)?(a):(b))
+int lengthOfLongestSubstring(char* s) {
+    int len = strlen(s);
+    int freq[128] = {0}; // 定义一个数组来存储字符出现的频率
+    int l = 0, r = -1; // 定义滑动窗口的左右边界
+    int res = 0; // 定义结果变量
+    while (l < len) { // 循环遍历字符串
+        if (r + 1 < len && freq[s[r + 1]] == 0) { // 如果右边界还没有到达字符串末尾且下一个字符未出现过
+            r++; // 右边界右移
+            freq[s[r]]++; // 更新字符出现频率
+        } else { // 否则
+            freq[s[l]]--; // 左边界右移，更新字符出现频率
+            l++;
+        }
+        res = MAX(res, r - l + 1); // 更新结果
+    }
+    return res; // 返回结果
+}
+int main() {
+    char str[10] = { 0 };
+    printf("Please input the string\n");
+    scanf_s("%s", str,10);
+    printf("values are %d\n", lengthOfLongestSubstring(str));
+    return 0;
+}
